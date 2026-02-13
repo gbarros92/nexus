@@ -1,14 +1,17 @@
-#include "math/bessel.hpp"
-#include "math/types.hpp"
+#include "math/vector.hpp"
 #include <iostream>
 
 int main() {
-    math::Mat2 A;
-    A(0,0) = math::bessel_j0(0.1);
-    A(0,1) = math::bessel_j1(1.0);
-    A(1,0) = math::bessel_j0(2.5);
-    A(1,1) = math::bessel_j1(5.0);
+    math::Vector<double> i = {1.0, 0.0, 0.0};
+    math::Vector<double> j = {0.0, 1.0, 0.0};
+    math::Vector<double> k = {0.0, 0.0, 1.0};
+    auto vec = i*3.0 - 2*j + false*k;
 
-    std::cout << "A = " << A << "\n";
+    std::cout << "v = " << vec << std::endl;
+    math::Vector<double> u(3u);
+    u << -3, 2, 1;
+    std::cout << "u = " << u << std::endl;
+    std::cout << "v+u = " << vec+u << std::endl;
+    
     return 0;
 }

@@ -6,13 +6,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 include(CTest)
-enable_testing()
 
 add_library(math
     source/math/bessel.cpp
     source/math/linalg.cpp
 )
-
 target_include_directories(math PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 find_package(Eigen3 3.3 REQUIRED NO_MODULE)
@@ -24,7 +22,4 @@ target_link_libraries(math PRIVATE Boost::boost)
 add_executable(app source/main.cpp)
 target_link_libraries(app PRIVATE math)
 
-add_executable(tests source/tests.cpp)
-target_link_libraries(tests PRIVATE math)
-
-add_test(NAME unit_tests COMMAND tests)
+add_subdirectory(tests)

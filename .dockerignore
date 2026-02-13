@@ -1,0 +1,17 @@
+# CMake build artifacts
+build/
+cmake-build-*/
+CMakeCache.txt
+CMakeFiles/
+Testing/
+CTestTestfile.cmake
+Makefile
+*.ninja
+.ninja_*
+
+# IDE
+.vscode/
+.idea/
+
+# git
+.git/

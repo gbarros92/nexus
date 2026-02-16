@@ -11,5 +11,7 @@ WORKDIR /src
 COPY . /src
 
 RUN cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_TESTING=ON \
+    -DNEXUS_BUILD_PYTHON=OFF \
  && cmake --build build \
  && ctest --test-dir build --output-on-failure

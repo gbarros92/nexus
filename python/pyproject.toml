@@ -1,0 +1,23 @@
+[build-system]
+requires = ["scikit-build-core>=0.9", "pybind11>=2.11"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "nexus"
+version = "0.0.0"
+description = "Nexus multiphysics simulator (C++ core with Python API)"
+requires-python = ">=3.9"
+readme = "../README.md"
+license = { text = "MIT" }
+
+[tool.scikit-build]
+# We run pip from nexus/python, but the CMake project is at repo root
+cmake.source-dir = ".."
+cmake.build-type = "Release"
+
+# Ensure the wheel/editable install includes the Python package
+wheel.packages = ["nexus"]
+
+# Optional but useful:
+# - include-package-data = true
+# - cmake.verbose = true

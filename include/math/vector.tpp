@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <utility>
 
-namespace math
+namespace nexus::math
 {
 
 // ============================================================================

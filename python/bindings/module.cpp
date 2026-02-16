@@ -13,8 +13,7 @@ void bind_math(py::module_& m) {
     // Create submodule: _core.math
     py::module_ mathm = m.def_submodule("math", "Math types and operations");
 
-    // Your type is: math::Vector<_Scalar>
-    using Vec = ::math::Vector<double>;
+    using Vec = ::nexus::math::Vector<double>;
 
     py::class_<Vec>(mathm, "Vector")
         .def(py::init<unsigned int>(), py::arg("dim"))

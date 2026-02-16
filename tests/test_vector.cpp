@@ -1,6 +1,6 @@
 // test_vector.cpp
 //
-// Minimal, framework-free tests for math::Vector<T> using <cassert>.
+// Minimal, framework-free tests for nexus::math::Vector<T> using <cassert>.
 // Compile (example):
 //   g++ -std=c++17 -O0 -g test_vector.cpp -I/path/to/include -o test_vector
 //
@@ -95,7 +95,7 @@ bool almost_equal(T a, T b)
 }
 
 template <class T>
-void expect_vec_eq(const math::Vector<T>& v, std::initializer_list<T> ref)
+void expect_vec_eq(const nexus::math::Vector<T>& v, std::initializer_list<T> ref)
 {
   EXPECT_EQ(v.dim(), static_cast<unsigned int>(ref.size()));
   unsigned int i = 0;
@@ -114,21 +114,21 @@ void test_constructors_and_access()
 {
   std::cout << "Run test_constructors_and_access." << std::endl;
   // dim ctor (zeros)
-  math::Vector<T> v(3u);
+  nexus::math::Vector<T> v(3u);
   EXPECT_EQ(v.dim(), 3u);
   EXPECT_TRUE(almost_equal<T>(v[0], T{}));
   EXPECT_TRUE(almost_equal<T>(v[1], T{}));
   EXPECT_TRUE(almost_equal<T>(v[2], T{}));
 
   // dim + value ctor
-  math::Vector<T> w(4, T(7));
+  nexus::math::Vector<T> w(4, T(7));
   EXPECT_EQ(w.dim(), 4u);
   for (unsigned int i = 0; i < w.dim(); ++i) {
     EXPECT_TRUE(almost_equal<T>(w[i], T(7)));
   }
 
   // initializer_list ctor
-  math::Vector<T> a = {T(1), T(2), T(3)};
+  nexus::math::Vector<T> a = {T(1), T(2), T(3)};
   expect_vec_eq(a, {T(1), T(2), T(3)});
 
   // write/read via operator[]
@@ -140,31 +140,31 @@ template <class T>
 void test_copy_and_move()
 {
   std::cout << "Run test_copy_and_move." << std::endl;
-  math::Vector<T> a = {T(1), T(2), T(3)};
+  nexus::math::Vector<T> a = {T(1), T(2), T(3)};
 
   // copy ctor deep copy
-  math::Vector<T> b(a);
+  nexus::math::Vector<T> b(a);
   expect_vec_eq(b, {T(1), T(2), T(3)});
   b[0] = T(99);
   EXPECT_TRUE(almost_equal<T>(b[0], T(99)));
   EXPECT_TRUE(almost_equal<T>(a[0], T(1))); // unchanged => deep copy
 
   // copy assignment deep copy
-  math::Vector<T> c(3, T(0));
+  nexus::math::Vector<T> c(3, T(0));
   c = a;
   expect_vec_eq(c, {T(1), T(2), T(3)});
   c[2] = T(77);
   EXPECT_TRUE(almost_equal<T>(a[2], T(3))); // unchanged
 
   // move ctor
-  math::Vector<T> msrc = {T(4), T(5), T(6)};
-  math::Vector<T> mdst(std::move(msrc));
+  nexus::math::Vector<T> msrc = {T(4), T(5), T(6)};
+  nexus::math::Vector<T> mdst(std::move(msrc));
   expect_vec_eq(mdst, {T(4), T(5), T(6)});
   EXPECT_EQ(msrc.dim(), 0u);
 
   // move assignment
-  math::Vector<T> asrc = {T(7), T(8), T(9)};
-  math::Vector<T> adst(3, T(0));
+  nexus::math::Vector<T> asrc = {T(7), T(8), T(9)};
+  nexus::math::Vector<T> adst(3, T(0));
   adst = std::move(asrc);
   expect_vec_eq(adst, {T(7), T(8), T(9)});
   EXPECT_EQ(asrc.dim(), 0u);
@@ -174,7 +174,7 @@ template <class T>
 void test_arithmetic_scalar()
 {
   std::cout << "Run test_arithmetic_scalar." << std::endl;
-  math::Vector<T> v = {T(1), T(2), T(3)};
+  nexus::math::Vector<T> v = {T(1), T(2), T(3)};
 
   // v * scalar
   auto a = v * T(3);
@@ -197,7 +197,7 @@ void test_arithmetic_scalar()
   }
 
   // compound *=
-  math::Vector<T> d = {T(1), T(2), T(3)};
+  nexus::math::Vector<T> d = {T(1), T(2), T(3)};
   d *= T(2);
   expect_vec_eq(d, {T(2), T(4), T(6)});
 
@@ -210,8 +210,8 @@ template <class T>
 void test_arithmetic_vector()
 {
   std::cout << "Run test_arithmetic_vector." << std::endl;
-  math::Vector<T> a = {T(1), T(2), T(3)};
-  math::Vector<T> b = {T(10), T(20), T(30)};
+  nexus::math::Vector<T> a = {T(1), T(2), T(3)};
+  nexus::math::Vector<T> b = {T(10), T(20), T(30)};
 
   auto c = a + b;
   expect_vec_eq(c, {T(11), T(22), T(33)});
@@ -220,7 +220,7 @@ void test_arithmetic_vector()
   expect_vec_eq(d, {T(9), T(18), T(27)});
 
   // compound
-  math::Vector<T> e = a;
+  nexus::math::Vector<T> e = a;
   e += b;
   expect_vec_eq(e, {T(11), T(22), T(33)});
 
@@ -232,37 +232,37 @@ template <class T>
 void test_dimension_mismatch_throws()
 {
   std::cout << "Run test_dimension_mismatch_throws." << std::endl;
-  math::Vector<T> a(3, T(1));
-  math::Vector<T> b(4, T(1));
+  nexus::math::Vector<T> a(3, T(1));
+  nexus::math::Vector<T> b(4, T(1));
 
   expect_throw_invalid_arg<std::invalid_argument>(+[]() {
-    math::Vector<T> x(0); // dim==0 should throw
+    nexus::math::Vector<T> x(0); // dim==0 should throw
   });
 
   // addition mismatch
   expect_throw_invalid_arg<std::invalid_argument>(+[]() {
-    math::Vector<T> a(3, T(1));
-    math::Vector<T> b(4, T(1));
+    nexus::math::Vector<T> a(3, T(1));
+    nexus::math::Vector<T> b(4, T(1));
     (void)(a + b);
   });
 
   // subtraction mismatch
   expect_throw_invalid_arg<std::invalid_argument>(+[]() {
-    math::Vector<T> a(3, T(1));
-    math::Vector<T> b(4, T(1));
+    nexus::math::Vector<T> a(3, T(1));
+    nexus::math::Vector<T> b(4, T(1));
     (void)(a - b);
   });
 
   // compound mismatch
   expect_throw_invalid_arg<std::invalid_argument>(+[]() {
-    math::Vector<T> a(3, T(1));
-    math::Vector<T> b(4, T(1));
+    nexus::math::Vector<T> a(3, T(1));
+    nexus::math::Vector<T> b(4, T(1));
     a += b;
   });
 
   expect_throw_invalid_arg<std::invalid_argument>(+[]() {
-    math::Vector<T> a(3, T(1));
-    math::Vector<T> b(4, T(1));
+    nexus::math::Vector<T> a(3, T(1));
+    nexus::math::Vector<T> b(4, T(1));
     a -= b;
   });
 }
@@ -271,7 +271,7 @@ template <class T>
 void test_stream_output()
 {
   std::cout << "Run test_stream_output." << std::endl;
-  math::Vector<T> v = {T(1), T(2), T(3)};
+  nexus::math::Vector<T> v = {T(1), T(2), T(3)};
   std::ostringstream oss;
   oss << v;
   const std::string s = oss.str();
@@ -287,19 +287,19 @@ template <class T>
 void test_comma_initializer()
 {
   std::cout << "Run test_comma_initializer." << std::endl;
-  math::Vector<T> k(3u);
+  nexus::math::Vector<T> k(3u);
   k << T(1), T(2), T(4);
   expect_vec_eq(k, {T(1), T(2), T(4)});
 
   // Too many values should throw
   expect_throw_out_of_range([&]() {
-    math::Vector<T> x(2u);
+    nexus::math::Vector<T> x(2u);
     x << T(1), T(2), T(3);
   });
 
   // // Initializing empty vector should throw
   // expect_throw_out_of_range([&]() {
-  //   math::Vector<T> x(0u);
+  //   nexus::math::Vector<T> x(0u);
   //   x << T(1);
   // });
 }
@@ -307,11 +307,11 @@ void test_comma_initializer()
 void test_cross_type_copy()
 {
   std::cout << "Run test_cross_type_copy." << std::endl;
-  math::Vector<int> vi = {1, 2, 3};
-  math::Vector<double> vd(vi);   // converting ctor
+  nexus::math::Vector<int> vi = {1, 2, 3};
+  nexus::math::Vector<double> vd(vi);   // converting ctor
   expect_vec_eq(vd, {1.0, 2.0, 3.0});
 
-  math::Vector<float> vf(3u);
+  nexus::math::Vector<float> vf(3u);
   vf = vd;                       // converting assignment
   EXPECT_EQ(vf.dim(), 3u);
   EXPECT_TRUE(almost_equal<float>(vf[0], 1.0f));

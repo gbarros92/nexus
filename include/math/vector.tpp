@@ -162,6 +162,19 @@ unsigned int Vector<_Scalar>::dim() const
 // ============================================================================
 
 template <class _Scalar>
+_Scalar& Vector<_Scalar>::operator()(unsigned int index)
+{
+  return m_data[index];
+}
+
+
+template <class _Scalar>
+const _Scalar& Vector<_Scalar>::operator()(unsigned int index) const
+{
+  return m_data[index];
+}
+
+template <class _Scalar>
 _Scalar& Vector<_Scalar>::operator[](unsigned int index)
 {
   return m_data[index];

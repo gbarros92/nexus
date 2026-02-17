@@ -123,6 +123,24 @@ public:
    *
    * @warning No bounds checking is performed.
    */
+  _Scalar& operator()(unsigned int _index);
+
+  /**
+   * @brief Element access (const).
+   * @param _index Zero-based component index.
+   * @return Const reference to the component at @_index.
+   *
+   * @warning No bounds checking is performed.
+   */
+  const _Scalar& operator()(unsigned int _index) const;
+
+  /**
+   * @brief Element access (mutable).
+   * @param _index Zero-based component index.
+   * @return Reference to the component at @_index.
+   *
+   * @warning No bounds checking is performed.
+   */
   _Scalar& operator[](unsigned int _index);
 
   /**

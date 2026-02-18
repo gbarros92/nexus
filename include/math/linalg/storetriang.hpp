@@ -5,6 +5,7 @@
 #include <cstddef>
 #include <memory>
 #include <utility>
+#include <iostream>
 
 namespace nexus::math {
 
@@ -62,7 +63,7 @@ public:
     index_type rows() const noexcept { return m_dim; }
     index_type cols() const noexcept { return m_dim; }
 
-    index_type size() const noexcept { return _DiagPolicy::size(_dim); }
+    index_type size() const noexcept { return _DiagPolicy::size(m_dim); }
 
     // -------------------------
     // Raw data access
@@ -143,8 +144,10 @@ private:
     }
 
     index_type index(index_type _i, index_type _j) const noexcept {
-        r = (_i < _j) ? _i : _j;
-        c = (_i < _j) ? _j : _i;
+        index_type r, c;
+        if (_i > _j) { r = _i; c = _j; }
+        else {r = _j; c = _i;}
+        // std::cout << "(" << _i << ", " << _j << ") => (" << r << ", " << c << ") =>" << _DiagPolicy::size(r) + c << std::endl;
         return _DiagPolicy::size(r) + c;
     }
 

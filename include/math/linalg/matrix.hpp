@@ -1,8 +1,11 @@
 #pragma once
 
 #include <cstddef>
-#include "math/matrixbase.hpp"
-#include "math/storedense.hpp"
+#include "matrixbase.hpp"
+#include "storedense.hpp"
+
+#include "symmetric.hpp"
+
 
 namespace nexus::math {
 
@@ -22,7 +25,7 @@ public:
     using index_type  = std::size_t;
 
     Matrix() = default;
-    Matrix(index_type rows, index_type cols) : m_data(rows, cols) {}
+    Matrix(index_type _rows, index_type _cols) : m_data(_rows, _cols) {}
 
     Matrix(const Matrix&) = default;
     Matrix& operator=(const Matrix&) = default;

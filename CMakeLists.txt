@@ -20,7 +20,6 @@ include(CTest)
 # Core library
 # --------------
 add_library(nexus_core
-  source/math/bessel.cpp
   source/math/linalg.cpp
 )
 add_library(nexus::core ALIAS nexus_core)

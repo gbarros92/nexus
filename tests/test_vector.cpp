@@ -16,7 +16,7 @@
 // - Eigen-style comma initializer: v << a, b, c;
 // - converting ctor Vector<U> -> Vector<T> when convertible
 
-#include "math/vector.hpp"
+#include "math/linalg/vector.hpp"
 
 #include <cassert>
 #include <cmath>
